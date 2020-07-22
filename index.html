@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: black;
+            color: chartreuse;
+            text-align: center;
+            padding: 10px 15px;
+        }
+
+        .content {
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .ulView {
+            text-align: center;
+            width: 30%;
+            margin-left: 31% !important;
+        }
+
+        #myInput {
+            background-image: url('searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 30%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL li a {
+            border: 1px solid #ddd;
+            margin-top: -1px;
+            /* Prevent double borders */
+            background-color: #f6f6f6;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block
+        }
+
+        #myUL li a:hover:not(.header) {
+            background-color: #eee;
+        }
+
+        .hide {
+            display: none
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 14px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #errmsg {
+            color: red;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <h2 class="header">My Phonebook</h2>
+    <div class="content">
+        <input type="text" id="myInput" placeholder="Search for names.." title="Type in a name">
+        <button value="search" class="button" onclick="myFunction()">search</button>
+        <div id="errmsg"></div>
+
+        <ul id="myUL" class="ulView hide">
+            <li><a href="#">Narendra</a></li>
+            <li><a href="#">Agnes</a></li>
+
+            <li><a href="#">Billy</a></li>
+            <li><a href="#">Bob</a></li>
+
+            <li><a href="#">Calvin</a></li>
+            <li><a href="#">Christina</a></li>
+            <li><a href="#">Cindy</a></li>
+        </ul>
+    </div>
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("myInput");
+            var value = document.getElementById('myInput').value;
+            
+            if(value.length <= 0){
+                $("#myUL").hide();
+                $("#errmsg").html("No Results Found").show().fadeOut("slow");
+            }
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                    
+                } else {
+                    li[i].style.display = "none";
+                    $("#myUL").show()
+                }
+            }
+        }
+        
+        $('#searchequip').onClick(function () {
+            var val = $.trim(this.value).toUpperCase();
+            $(".mt-checkbox").each(function () {
+                var parent = $(this).closest('li'),
+                    length = $(this).text().length > 0;
+                if (length && $(this).text().search(new RegExp(val, "i")) < 0) {
+                    parent.fadeOut("slow");
+                    console.log('Nothing Found ');
+                    $("#errmsg").html("No Results Found").show().fadeOut("slow");
+                }
+                else {
+                    parent.show();
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>
